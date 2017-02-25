@@ -2,6 +2,8 @@
 library(wordVectors)
 library(stringdist)
 
+source('../spider/_daemon.R', chdir = TRUE)
+
 source('functions/fuzz.R')
 source('functions/graph_io.R')
 source('functions/mcmc.R')
@@ -19,8 +21,9 @@ LoadGraph()
 origin <- RandChan(user = TRUE)
 # origin = 'worldmaking'
 
-crawl <- Crawl(x$objects$id[sample(1:length(x$objects$id), 100)], depth = 3)
 crawl <- Crawl(origin, depth = 4)
+
+crawl <- Crawl(x$objects$id[sample(1:length(x$objects$id), 100)], depth = 3)
 
 SaveGraph()
 
@@ -75,7 +78,7 @@ walk.dict <-
 
 # Markov walk
 
-walk <- Walk(origin = 'root', walk.dict, walk.length = 10000)
+walk <- Walk(origin = 'root', walk.dict, walk.length = 100000)
 
 walk.jump <-Jump(walk, walk.dict, walk.length = 1000, jump.num = 100)
 
